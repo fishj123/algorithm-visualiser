@@ -1,0 +1,18 @@
+
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+ul {
+    transform: rotate(-90deg);
+    width: 50%;
+}
+
+li {
+    list-style: none;
+    background: rgb(24, 24, 102);
+    margin: 5px;
+    height: 5px;
+}
