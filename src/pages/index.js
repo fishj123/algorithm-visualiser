@@ -6,65 +6,93 @@ import Image from "../components/image"
 import SEO from "../components/seo"
 
 const IndexPage = () => {
-
   const [arr, setArr] = useState([])
 
   const generateArray = () => {
-    const count = 100;
+    const count = 50
     const a = []
-    for(var i=0; i < count; i++) {
+    for (var i = 0; i < count; i++) {
       a.push(i)
     }
 
-    shuffleArray(a);
-
+    shuffleArray(a)
   }
 
-  const shuffleArray = (array) => {
-    let counter = array.length;
+  const shuffleArray = array => {
+    let counter = array.length
 
     // While there are elements in the array
     while (counter > 0) {
       // Pick a random index
-      let index = Math.floor(Math.random() * counter);
+      let index = Math.floor(Math.random() * counter)
 
       // Decrease counter by 1
-      counter--;
+      counter--
 
       // And swap the last element with it
-      let temp = array[counter];
-      array[counter] = array[index];
-      array[index] = temp;
+      let temp = array[counter]
+      array[counter] = array[index]
+      array[index] = temp
     }
 
-    setArr(array);
+    setArr(array)
   }
 
-  const bubbleSort = () => {
-    let array = [...arr];
+  const bubbleSort = async () => {
 
-    for(let i = 0; i < array.length; i++) {
-      for(let j = 1; j <= array.length; j++) {
+    let array = [...arr]
+    async function wait() {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, 0);
+      });
+    }
+  
+    for(var i = 0; i < array.length; i++) {
+
+      for(var j = 0; j < array.length; j++) {
+        
         if(array[i] > array[j]) {
+          await wait();
           let temp = array[i];
           array[i] = array[j]
           array[j] = temp;
           setArr(array);
         }
       }
-
-    
     }
 
+    // setTimeout(function() {
+    //   setArr(array)
+    // }, 1)
+  
   }
 
+  const instantBubbleSort = async () => {
 
- const doTheArrayWork = () => {
-    generateArray();
+    let array = [...arr]
+
+    for (var i = 0; i < array.length; i++) {
+
+      for (var j = 0; j < array.length; j++) {
+
+        if (array[i] > array[j]) {
+          //await wait();
+          let temp = array[i];
+          array[i] = array[j]
+          array[j] = temp;
+          setArr(array);
+        }
+      }
+    }
+
+    // setTimeout(function() {
+    //   setArr(array)
+    // }, 1)
+
   }
 
   useEffect(() => {
-    doTheArrayWork()
+    generateArray()
   }, [])
 
   return (
@@ -72,17 +100,19 @@ const IndexPage = () => {
       <SEO title="Home" />
       <h1>Bubble Sort</h1>
       <ul>
-        {arr.map(item => 
-          <li key={item} style={{width: item + "%"}} className="bubble-item" data-id={item} />
-          )}
+        {arr.map(item => (
+          <li
+            key={item}
+            style={{ width: item + "%" }}
+            className="bubble-item"
+            data-id={item}
+          />
+        ))}
       </ul>
-      <button onClick={() => doTheArrayWork()}>
-        Generate New Array
-      </button>
-      <button onClick={() => bubbleSort()}>
-        Sort Array
-      </button>
-      <Link to="/page-2/">Go to page 2</Link>
+      <button onClick={() => generateArray()}>Generate New Array</button>
+      <button onClick={() => bubbleSort()}>Sort Array (Visualize)</button>
+      <button onClick={() => instantBubbleSort()}>Sort Array (Instantly)</button>
+     
     </Layout>
   )
 }
